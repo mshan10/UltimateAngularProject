@@ -1,4 +1,4 @@
-function RegisterController() {
+function RegisterController(AuthService) {
   var ctrl = this;
   ctrl.$onInit = function () {
     ctrl.error = null;
@@ -7,8 +7,15 @@ function RegisterController() {
       password: ''
     };
   };
-  ctrl.createUser = functio (event) {
-
+  ctrl.createUser = function (event) {
+    console.log(event.user);
+    return AuthService
+      .register(event.user)
+      .then(function () {
+        console.log('USER:', user);
+      }, function (reason) {
+        ctrl.error = reason.message;
+      });
   };
 }
 
