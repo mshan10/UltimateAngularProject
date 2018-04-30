@@ -5,7 +5,14 @@ function AuthService(------$PARSE----) {
     authData = response;
     return authData;
   }
-  thi.login = function (user) {
+  function on SignIn() {
+    authData = user;
+    return auth.$requireSignIn();
+  }
+  function clearAuthData() {
+    authData = null;
+  }
+  this.login = function (user) {
     return auth
       .$signInWithEmailAndPassword(user.email, user.password)
       .then(storeAuthData);
@@ -15,6 +22,23 @@ function AuthService(------$PARSE----) {
       .$createUserWithEmailAndPassword(user.email, user.password)
       .then(storeAuthData)
   };
+  this.logout = function () {
+    return auth
+      .$signout()
+      .then(clearAuthData);
+  };
+  this.requireAuthentication = function () {
+    return auth
+      .$waitForSignIn().then(onSignIn);
+  };
+  this.isAuthenticated = function () {
+    return !!authData;
+  };
+  this.getUser = function () {
+    if (authData) {
+      return authData;
+    };
+  }
 }
 
 angular
