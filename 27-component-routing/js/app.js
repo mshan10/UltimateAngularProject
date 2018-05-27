@@ -1,2 +1,6 @@
 angular
-	.module('app', []);
+	.module('app', [
+		'home',
+		'about',
+		'contact'
+	]);
